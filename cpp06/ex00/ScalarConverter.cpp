@@ -1,12 +1,12 @@
-#include "ScalerConverter.hpp"
+#include "ScalarConverter.hpp"
 
-ScalerConverter::ScalerConverter()
+ScalarConverter::ScalarConverter()
 {
     std::cout << "converter Default contructor called" << std::endl;
 }
 
 
-ScalerConverter::ScalerConverter(const std::string input): _input(input)
+ScalarConverter::ScalarConverter(const std::string input): _input(input)
 {
     std::cout << "conversion for: " << _input << " called" << std::endl;
     _double = atof(_input.c_str());
@@ -14,18 +14,18 @@ ScalerConverter::ScalerConverter(const std::string input): _input(input)
     printout();
 }
 
-ScalerConverter::~ScalerConverter()
+ScalarConverter::~ScalarConverter()
 {
     std::cout << "destructor called" << std::endl;
 }
 
-ScalerConverter::ScalerConverter(const ScalerConverter &copy): _input (copy.getInput())
+ScalarConverter::ScalarConverter(const ScalarConverter &copy): _input (copy.getInput())
 {
     std::cout << "conversion copy constructor called" << std::endl;
     *this = copy;
 }
 
-ScalerConverter &ScalerConverter::operator=(const ScalerConverter &copy)
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
 {
 	std::cout << "Conversion Assignation operator called" << std::endl;
 	if (this == &copy)
@@ -39,9 +39,9 @@ ScalerConverter &ScalerConverter::operator=(const ScalerConverter &copy)
 	return *this;
 }
 
-void ScalerConverter::convert(void)
+void ScalarConverter::convert(void)
 {
-	void (ScalerConverter::*functionPTRS[])(void) = {&ScalerConverter::fromChar, &ScalerConverter::fromInt, &ScalerConverter::fromFloat, &ScalerConverter::fromDouble};
+	void (ScalarConverter::*functionPTRS[])(void) = {&ScalarConverter::fromChar, &ScalarConverter::fromInt, &ScalarConverter::fromFloat, &ScalarConverter::fromDouble};
 	int types[] = {CHAR, INT, FLOAT, DOUBLE};
 
 	this->_type = check_input();
@@ -58,10 +58,10 @@ void ScalerConverter::convert(void)
 		}
 	}
 	if (i == 4)
-		throw ScalerConverter::Exception();
+		throw ScalarConverter::Exception();
 }
 
-void ScalerConverter::printout(void)
+void ScalarConverter::printout(void)
 {
 	if (getType() != NAN_INF && getDouble() <= UCHAR_MAX && getDouble() >= 0)
 	{
@@ -117,7 +117,7 @@ void ScalerConverter::printout(void)
 	}
 }
 
-int ScalerConverter::check_input(void)
+int ScalarConverter::check_input(void)
 {
 	if (getInput().compare("nan") == 0 || getInput().compare("+inf") == 0 ||
 		getInput().compare("-inf") == 0 || getInput().compare("+inff") == 0 ||
@@ -164,64 +164,64 @@ int ScalerConverter::check_input(void)
 		return (ERROR);
 }
 
-void ScalerConverter::fromChar(void)
+void ScalarConverter::fromChar(void)
 {
 	this->_char = static_cast<unsigned char>(getInput()[0]);
 	this->_int = static_cast<int>(getChar());
 	this->_float = static_cast<float>(getChar());
 	this->_double = static_cast<double>(getChar());
 }
-void ScalerConverter::fromInt(void)
+void ScalarConverter::fromInt(void)
 {
 	this->_int = static_cast<int>(getDouble());
 	this->_char = static_cast<unsigned char>(getInt());
 	this->_float = static_cast<float>(getDouble());
 }
-void ScalerConverter::fromFloat(void)
+void ScalarConverter::fromFloat(void)
 {
 	this->_float = static_cast<float>(getDouble());
 	this->_char = static_cast<char>(getFloat());
 	this->_int = static_cast<int>(getFloat());
 }
-void ScalerConverter::fromDouble(void)
+void ScalarConverter::fromDouble(void)
 {
 	this->_char = static_cast<char>(getDouble());
 	this->_int = static_cast<int>(getDouble());
 	this->_float = static_cast<float>(getDouble());
 }
 
-std::string ScalerConverter::getInput(void) const
+std::string ScalarConverter::getInput(void) const
 {
     return _input;
 }
 
-int ScalerConverter::getType(void) const
+int ScalarConverter::getType(void) const
 {
     return _type;
 }
 
-char ScalerConverter::getChar(void) const
+char ScalarConverter::getChar(void) const
 {
     return _char;
 }
 
-int ScalerConverter::getInt(void) const
+int ScalarConverter::getInt(void) const
 {
     return _int;
 }
 
-float ScalerConverter::getFloat(void) const
+float ScalarConverter::getFloat(void) const
 {
     return _float;
 }
 
-double ScalerConverter::getDouble(void) const
+double ScalarConverter::getDouble(void) const
 {
     return _double;
 }
 
 
-const char *ScalerConverter::Exception::what() const throw()
+const char *ScalarConverter::Exception::what() const throw()
 {
     return "Conversion is imposible";
 }

@@ -1,4 +1,4 @@
-#include "ScalerConverter.hpp"
+#include "ScalarConverter.hpp"
 
 int main(int argc, char **argv)
 {
@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     }
     try
     {
-        ScalerConverter ScalerConverter(argv[1]);
+        ScalarConverter ScalarConverter(argv[1]);
     }
     catch(const std::exception& e)
     {

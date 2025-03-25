@@ -15,7 +15,7 @@
 #define FLOAT 5
 #define DOUBLE 6
 
-class ScalerConverter
+class ScalarConverter
 {
     private:
 		const std::string _input;
@@ -25,7 +25,7 @@ class ScalerConverter
 		float _float;
 		double _double;
 
-        ScalerConverter();
+        ScalarConverter();
 
         void    convert(void);
         void    printout(void);
@@ -44,12 +44,12 @@ class ScalerConverter
 		double getDouble(void)const;
 
     public:
-        ScalerConverter(const std::string input);
-        ScalerConverter(const ScalerConverter &copy);
+        ScalarConverter(const std::string input);
+        ScalarConverter(const ScalarConverter &copy);
 
-        ~ScalerConverter();
+        ~ScalarConverter();
 
-        ScalerConverter &operator=(const ScalerConverter &copy);
+        ScalarConverter &operator=(const ScalarConverter &copy);
 
         class Exception: public std::exception
         {

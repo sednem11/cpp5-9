@@ -24,13 +24,29 @@ Intern const &Intern::operator=(const Intern &copy)
 
 AForm *Intern::Makeform(std::string name, std::string target)
 {
-    if (name == "RobotomyRequestForm")
-        return(new RobotomyRequestForm(target));
-    else if (name == "PresidentialPardonForm")
-        return(new PresidentialPardonForm(target));
-    else if (name == "ShrubberyCreationForm")
-        return(new ShrubberyCreationForm(target));
-    else
-        std::cout << "Form was not created because form name doesnt exist" << std::endl;
-    return(NULL);
+	std::string names[3] = {
+		"PresidentialPardonForm",
+		"RobotomyRequestForm",
+		"ShrubberyCreationForm"
+	};
+
+	for(int i = 0; i < 3; i++)
+	{
+		if(name.compare(names[i]) == 0)
+		{
+			switch(i){
+				case 0:
+				return new PresidentialPardonForm(target);
+				break;
+				case 1:
+				return new RobotomyRequestForm(target);
+				break;
+				case 2:
+				return new ShrubberyCreationForm(target);
+				break;
+			}
+		}
+	}
+	std::cout << "The Intern cant do magic, the Form doenst exist so maybe give a name that is correct" << std::endl;
+	return NULL;
 }
