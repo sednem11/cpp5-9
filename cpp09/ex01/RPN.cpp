@@ -58,40 +58,76 @@ void RPN::reverse_PN()
     while(stack.size() >= 3)
     {
         first = stack.top();
-        for (int i = 0; i < 4; i++)
-        {
-            if (static_cast<char>(first + '0') == types[i])
-            {
-                std::cerr << "Error: suposed number is an operator" << std::endl;
-                return ;
-            }
-        }
         stack.pop();
         if(!stack.empty())
             second = stack.top();
-        for (int i = 0; i < 4; i++)
-        {
-            if (static_cast<char>(second + '0') == types[i])
-            {
-                std::cerr << "Error: suposed number is an operator" << std::endl;
-                return ;
-            }
-        }
         if (!stack.empty())
             stack.pop();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
-            if (!stack.empty() && static_cast<char>(stack.top() + '0') == types[i])
+            if (!stack.empty() && i < 4 && static_cast<char>(stack.top() + '0') == types[i])
             {
                 if (!stack.empty())
                     stack.pop();
                 (this->*functionptrs[i])(first, second);
                 break;
             }
+            else if (i == 4)
+            {
+                stack.push(second);
+                reverse_PN2();
+                stack.push(first);
+                if (stack.size() == 1)
+                {
+                    while(!stack.empty())
+                        stack.pop();
+                    return ;
+                }
+            }
         }
+    }
+    if (stack.size() > 1)
+    {
+        std::cout << "error with the argument" << std::endl;
+        while(!stack.empty())
+            stack.pop();
+        return ;
     }
     std::cout << (stack.top()) << std::endl;
     stack.pop();
+}
+
+void RPN::reverse_PN2()
+{
+    void (RPN::*functionptrs[])(int, int) = {&RPN::plus, &RPN::minus, &RPN::multiply, &RPN::divide};
+    int types[] = {'+', '-', '*', '/'};
+    int first = stack.top();
+    stack.pop();
+    int second = stack.top();
+    stack.pop();
+    for (int i = 0; i < 5; i++)
+    {
+        if (!stack.empty() && i < 4 && static_cast<char>(stack.top() + '0') == types[i])
+        {
+            if (!stack.empty())
+                stack.pop();
+            (this->*functionptrs[i])(first, second);
+            break;
+        }
+        else if (i == 4)
+        {
+            stack.push(second);
+            if (stack.size() == 1)
+            {
+                std::cout << "error with the argument" << std::endl;
+                while(!stack.empty())
+                    stack.pop();
+                return ;
+            }
+            reverse_PN2();
+            stack.push(first);
+        }
+    } 
 }
 
 void RPN::plus(int first, int second)

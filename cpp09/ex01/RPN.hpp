@@ -20,4 +20,5 @@ public:
     RPN (const RPN &copy);
     void    set_arguments(std::string argument);
     void     reverse_PN();
+    void     reverse_PN2();
 };
